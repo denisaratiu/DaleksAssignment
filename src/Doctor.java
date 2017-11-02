@@ -1,6 +1,9 @@
 
-/** This class models the Doctor in the game. A Doctor has
- *  a position and can move to a new position.
+import java.awt.Color;
+
+/**
+ * This class models the Doctor in the game. A Doctor has a position and can
+ * move to a new position.
  */
 public class Doctor {
 
@@ -13,7 +16,8 @@ public class Doctor {
      * @param theCol The column this Doctor starts at.
      */
     public Doctor(int theRow, int theCol) {
-
+        this.row = theRow;
+        this.col = theCol;
     }
 
     /**
@@ -28,7 +32,27 @@ public class Doctor {
      * @param newCol The column the player clicked on.
      */
     public void move(int newRow, int newCol) {
-
+        // if the user clicks on the doctor
+        if (newRow == this.row && newCol == this.col) {
+            // make the doctor stay where it is and "skip a turn"
+            newRow = this.row;
+            newCol = this.col;
+        }
+        // if the user presses one of the 8 surronding squares for the doctor to move
+        if ((newRow == this.row + 1 || newRow == this.row - 1)
+                && (newCol == this.col + 1 || newCol == this.col - 1)) {
+            // move the doctor to the pressed square
+            this.row = newRow;
+            this.col = newCol;
+        }
+        // if the user does not press on a surrounding square or itelf
+        if ((newRow != this.row + 1 || newRow != this.row - 1)
+                && (newCol != this.col + 1 || newCol != this.col - 1)
+                || (newRow != this.row && newCol != this.col)) {
+            // move the doctor to a random position by making the row and col random
+            this.row = (int) (Math.random() * 12);
+            this.col = (int) (Math.random() * 12);
+        }
     }
 
     /**
@@ -37,7 +61,8 @@ public class Doctor {
      * @return This Doctor's row.
      */
     public int getRow() {
-
+        // get the row of the doctor
+        return this.row;
     }
 
     /**
@@ -46,7 +71,7 @@ public class Doctor {
      * @return This Doctor's column.
      */
     public int getCol() {
-
+        // get the column of the doctor
+        return this.col;
     }
-
 }
