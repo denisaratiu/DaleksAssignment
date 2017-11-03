@@ -56,8 +56,9 @@ public class CatchGame {
     public void playGame() {
 
         while (true) {
-            // move the doctor according to the click
+            board.removePeg(doctor.getRow(), doctor.getCol());
             doctor.move(click.getRow(), click.getCol());
+            board.putPeg(Color.GREEN, doctor.getRow(), doctor.getCol());
 
             //move the daleks towards the doctor
             dalek1.advanceTowards(doctor);
