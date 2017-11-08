@@ -56,46 +56,50 @@ public class CatchGame {
      * selects a square, when the Daleks move, when the game is won/lost.
      */
     public void playGame() {
-        boolean doctorWins;
-        if ((doctor.getCol() != dalek1.getCol() && doctor.getRow() != dalek1.getRow()) 
-                ||(doctor.getCol() != dalek2.getCol() && doctor.getRow() != dalek2.getRow())
-                || doctor.getCol() != dalek3.getCol() && doctor.getRow() != dalek3.getRow()) {
-            // move the doctor
-            doctor.move(click.getRow(), click.getCol());
-            // remove the peg
-            board.removePeg(doctor.getRow(), doctor.getCol());
-            // put the new peg where the doctor clicked
-            board.putPeg(Color.GREEN, doctor.getRow(), doctor.getCol());
-
-            if(!dalek1.hasCrashed()){
-              board.removePeg(dalek1.getRow(), dalek1.getCol());
-              dalek1.advanceTowards(doctor);
-              board.putPeg(Color.BLACK, dalek1.getRow(), dalek1.getCol());
-            }
-            
-            if(!dalek2.hasCrashed()){
-              board.removePeg(dalek2.getRow(), dalek2.getCol());
-              dalek2.advanceTowards(doctor);
-              board.putPeg(Color.BLACK, dalek2.getRow(), dalek2.getCol());
-            }
-            
-            if(!dalek3.hasCrashed()){
-              board.removePeg(dalek3.getRow(), dalek3.getCol());
-              dalek3.advanceTowards(doctor);
-              board.putPeg(Color.BLACK, dalek3.getRow(), dalek3.getCol());
-            }
-            doctorWins = true;
-        }
+        boolean endGame = false;
         
-        if((dalek1.getCol() == dalek2.getCol() && dalek1.getRow() == dalek2.getRow())
+            // all the daleks have crashed
+          while((dalek1.getCol() == dalek2.getCol() && dalek1.getRow() == dalek2.getRow())
                 && (dalek2.getCol() == dalek3.getCol() && dalek2.getRow() == dalek3.getRow())
                 && (dalek1.getCol() == dalek3.getCol() && dalek1.getRow() == dalek3.getRow())){
-            System.out.println("The doctor has won");
+                board.putPeg(Color.yellow, dalek1.getCol(), dalek2.getRow());
+                System.out.println("The doctor has won!");
+                endGame = true;
+                break;
+            }
+            // if the first dalek has caught the doctor
+       while(doctor.getCol() == dalek1.getCol() && doctor.getRow() == dalek1.getRow()) {
+                // remove both pegs
+                board.removePeg(doctor.getRow(), doctor.getCol());
+                board.removePeg(dalek1.getCol(), dalek1.getRow());
+                // place a blue peg that represents that the doctor is caught
+                board.putPeg(Color.BLUE, doctor.getRow(), doctor.getCol());
+                System.out.println("The daleks have won!");
+                endGame = true;
+                break;
         }
-        
-        while(doctorWins = false){
+        while(doctor.getCol() == dalek2.getCol() && doctor.getRow() == dalek2.getRow()) {
+                // remove both pegs
+                board.removePeg(doctor.getRow(), doctor.getCol());
+                board.removePeg(dalek2.getCol(), dalek2.getRow());
+                // place a blue peg that represents that the doctor is caught
+                board.putPeg(Color.BLUE, doctor.getRow(), doctor.getCol());
+                System.out.println("The daleks have won!");
+                endGame = true;
+                break;
+        }
+        while(doctor.getCol() == dalek3.getCol() && doctor.getRow() == dalek3.getRow()) {
+                // remove both pegs
+                board.removePeg(doctor.getRow(), doctor.getCol());
+                board.removePeg(dalek3.getCol(), dalek3.getRow());
+                // place a blue peg that represents that the doctor is caught
+                board.putPeg(Color.BLUE, doctor.getRow(), doctor.getCol());
+                System.out.println("The daleks have won!");
+                endGame = true;
+                break;
+        }
             // if dalek 1 and 2 crash remove one peg and place another one that is red
-            if ((dalek1.getRow() == dalek2.getRow()) && (dalek1.getCol() == dalek2.getCol())) {
+        if((dalek1.getRow() == dalek2.getRow()) && (dalek1.getCol() == dalek2.getCol())) {
                 dalek1.hasCrashed();
                 dalek2.hasCrashed();
                 board.removePeg(dalek1.getRow(), dalek1.getCol());
@@ -104,7 +108,7 @@ public class CatchGame {
             }
 
             // if dalek 1 and 3 crash remove one peg and place another one that is red
-            if ((dalek1.getRow() == dalek3.getRow()) && (dalek1.getCol() == dalek3.getCol())) {
+          if((dalek1.getRow() == dalek3.getRow()) && (dalek1.getCol() == dalek3.getCol())) {
                 dalek1.hasCrashed();
                 dalek3.hasCrashed();
                 board.removePeg(dalek1.getRow(), dalek1.getCol());
@@ -113,50 +117,51 @@ public class CatchGame {
             }
 
             // if dalek 2 and 3 crash remove one peg and place another one that is red
-            if ((dalek3.getRow() == dalek2.getRow()) && (dalek3.getCol() == dalek2.getCol())) {
+            if((dalek3.getRow() == dalek2.getRow()) && (dalek3.getCol() == dalek2.getCol())) {
                 dalek3.hasCrashed();
                 dalek2.hasCrashed();
                 board.removePeg(dalek3.getRow(), dalek3.getCol());
                 board.removePeg(dalek2.getRow(), dalek2.getCol());
                 board.putPeg(Color.RED, dalek2.getRow(), dalek2.getCol());
+                
             }
-            //if the first dalek catches the doctor
-            if ((dalek1.getCol() == doctor.getCol()) && (dalek1.getRow() == doctor.getRow())) {
-                board.removePeg(doctor.getCol(), doctor.getRow());
-                board.removePeg(dalek1.getRow(), dalek1.getCol());
-                board.putPeg(Color.BLUE, doctor.getCol(), doctor.getRow());
-                break;
+            
+            while(true && !endGame){
+            // allow the doctor to move
+            // remove the peg
+            board.removePeg(doctor.getRow(), doctor.getCol());
+            // move the doctor
+            doctor.move(click.getRow(), click.getCol());
+            // put the new peg where the doctor clicked
+            board.putPeg(Color.GREEN, doctor.getRow(), doctor.getCol());
+            
+            // move all the daleks towards the doctor
+            // make sure it has not crashed
+            if(!dalek1.hasCrashed()){
+                // remove the first dalek
+              board.removePeg(dalek1.getRow(), dalek1.getCol());
+              // move it towards the doctor
+              dalek1.advanceTowards(doctor);
+              // change its coordinates to be closer to the doctor
+              board.putPeg(Color.BLACK, dalek1.getRow(), dalek1.getCol());
             }
-            //if dalek2 catches the doctor
-            if ((dalek2.getCol() == doctor.getCol()) && (dalek2.getRow() == doctor.getRow())) {
-                board.removePeg(doctor.getCol(), doctor.getRow());
-                board.removePeg(dalek2.getRow(), dalek2.getCol());
-                board.putPeg(Color.BLUE, doctor.getCol(), doctor.getRow());
-                break;
+            
+            // make sure to move it only if its not crashed
+            if(!dalek2.hasCrashed()){
+                // move it by removing the original peg
+              board.removePeg(dalek2.getRow(), dalek2.getCol());
+              // make the new peg coordinates near the doctor
+              dalek2.advanceTowards(doctor);
+              // put the peg down
+              board.putPeg(Color.BLACK, dalek2.getRow(), dalek2.getCol());
             }
-            //if dalek3 catches the doctor
-            if ((dalek3.getCol() == doctor.getCol()) && (dalek3.getRow() == doctor.getRow())) {
-                board.removePeg(doctor.getCol(), doctor.getRow());
-                board.removePeg(dalek3.getRow(), dalek3.getCol());
-                board.putPeg(Color.BLUE, doctor.getCol(), doctor.getRow());
-                break;
-            }
-            // dalek cannot move
-            if (dalek1.hasCrashed() == true || dalek2.hasCrashed() == true || dalek3.hasCrashed() == true) {
-            }
-
-            // if all daleks crash
-            if((dalek1.getRow() == dalek2.getRow()) && (dalek1.getCol() == dalek2.getCol()
-                    && (dalek3.getRow() == dalek2.getRow())) && (dalek3.getCol() == dalek2.getCol())){
-                dalek1.crash();
-                dalek2.crash();
-                dalek3.crash();
-                board.removePeg(dalek1.getRow(), dalek1.getCol());
-                board.removePeg(dalek2.getRow(), dalek2.getCol());
-                board.removePeg(dalek3.getRow(), dalek3.getCol());
-                board.putPeg(Color.RED, dalek2.getRow(), dalek2.getCol());
-                break;
+            // same as before
+            if(!dalek3.hasCrashed()){
+              board.removePeg(dalek3.getRow(), dalek3.getCol());
+              dalek3.advanceTowards(doctor);
+              board.putPeg(Color.BLACK, dalek3.getRow(), dalek3.getCol());
             }
         }
+        }
     }
-}
+
