@@ -7,5 +7,4 @@ public class MainGame {
         CatchGame game = new CatchGame();
         game.playGame();
     }
-
 }

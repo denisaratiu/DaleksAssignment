@@ -39,8 +39,10 @@ public class Doctor {
             newCol = this.col;
         }
         // if the user presses one of the 8 surronding squares for the doctor to move
-        if ((newRow == this.row + 1 || newRow == this.row - 1)
-                && (newCol == this.col + 1 || newCol == this.col - 1)) {
+        if (((newRow - this.row == -1 || newRow - this.row ==0) && (newCol - this.col ==0 || newCol - this.col == -1 || newCol - this.col ==1))
+                || ((newRow - this.row == -1 || newRow - this.row == 0) && (newCol - this.col == -1))
+                || ((newRow - this.row ==1 || newRow - this.row ==0) && (newCol - this.col ==-1 || newCol - this.col ==0 || newCol - this.col ==1))
+                || ((newRow - this.row ==0) && (newCol - this.col ==1))){
             // move the doctor to the pressed square
             this.row = newRow;
             this.col = newCol;

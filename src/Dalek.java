@@ -29,51 +29,47 @@ public class Dalek {
      */
     public void advanceTowards(Doctor doc) {
         // if the column is to the left of the doctor and the dalek's row is below the doctor 
-        if ((this.getCol() < doc.getCol()) && (this.getRow() < doc.getRow())) {
+        if ((this.col < doc.getCol()) && (this.row < doc.getRow())) {
             // move the dalek closer to the doctor
             // move it one column to the right
             this.col++;
             // move it one row higher
             this.row++;
             // if the dalek's column is the same but row is below the doctor
-        } else if ((this.getCol() == doc.getCol()) && (this.getRow() < doc.getRow())) {
+        } else if ((this.col == doc.getCol()) && (this.row < doc.getRow())) {
             // move dalek higher one row
             this.row++;
             // if the column is the same but the dalek is above the doctor
-        } else if ((this.getCol() == doc.getCol()) && (this.getRow() > doc.getRow())) {
+        } else if ((this.col == doc.getCol()) && (this.row > doc.getRow())) {
             // move dalek lower
             this.row--;
             // if the row is the same but the dalek is to the left of the doctor
-        } else if ((this.getCol() < doc.getCol()) && (this.getRow() == doc.getRow())) {
+        } else if ((this.col < doc.getCol()) && (this.row == doc.getRow())) {
             // move dalek to the right
             this.col++;
             // if the row is the same but dalek is to the right of the doctor
-        } else if ((this.getCol() > doc.getCol()) && (this.getRow() == doc.getRow())) {
+        } else if ((this.col > doc.getCol()) && (this.row == doc.getRow())) {
             // move the dalek left
             this.col--;
             // if the dalek is to the right and higher than the doctor
-        } else if ((this.getCol() > doc.getCol()) && (this.getRow() > doc.getRow())) {
+        } else if ((this.col > doc.getCol()) && (this.row > doc.getRow())) {
             // move to the left
             this.col--;
             // move lower
             this.row--;
             // if the dalek is lower and to the right
-        } else if ((this.getCol() < doc.getCol()) && (this.getRow() > doc.getRow())) {
+        } else if ((this.col < doc.getCol()) && (this.row > doc.getRow())) {
             // move to the left
             this.col++;
             // move higher
             this.row--;
             // if the dalek is higher and to the left
-        } else if ((this.getCol() > doc.getCol()) && (this.getRow() < doc.getRow())) {
+        } else if ((this.col > doc.getCol()) && (this.row < doc.getRow())) {
             // move dalek to the right
             this.col--;
             // move dalek lower
             this.row++;
-        } else {
-            // the dalek and doctor are on the same spot
-            this.col = this.col;
-            this.row = this.row;
-        }
+        } 
     }
 
     /**
